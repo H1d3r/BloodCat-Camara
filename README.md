@@ -2,13 +2,15 @@
 
 # Blood-Cat
 
----
-！！！！We are collecting login credentials for all cameras！！！！！
-
-![Submit username and password for BloodCat](https://github.com/MartinxMax/BloodCat/issues/4)
----
-
 A tool for hacking into publicly exposed network cameras, with support for specifying country and region
+
+```
+Version 1.5
+[+] Fully automatic calculation of the optimal thread count, ensuring maximum efficiency without impacting system performance
+[+] Expanded password list
+[+] Added --password option for password spraying
+```
+
 
 ```
 Version 1.3
@@ -97,4 +99,3 @@ $ ./play.sh
 
 
  
-

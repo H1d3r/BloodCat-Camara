@@ -46,7 +46,7 @@ qp         t\io,_           `~"TOOggQV""""        _,dg,_ =PIQHib.
                                 "boo,._dP"       `\_  `\    `\|   `\   ;
                                  `"7tY~'            `\  `\    `|_   |
                                                       `~\  |'''+'\033[0m'+'\033[102m'+'''
-[Maptnh@S-H4CK13]      [Blood Cat V1.3]    [https://github.com/MartinxMax]'''+'\033[0m'
+[Maptnh@S-H4CK13]      [Blood Cat V1.5]    [https://github.com/MartinxMax]'''+'\033[0m'
 
     
 def read_ips(filename: str):
@@ -83,6 +83,7 @@ def main():
     parser.add_argument('--key',  default='', type=str, help='Fofa API key')
     parser.add_argument('--ip', default='', type=str, help='IP:PORT')
     parser.add_argument('--ips', default='', type=str, help='Targets list file (each line: IP or IP:PORT)')
+    parser.add_argument('--password', default='', type=str, help='Password Spraying')
     args = parser.parse_args()
     cam = Execute_Cam()
     # Ips Module
@@ -94,7 +95,7 @@ def main():
           try:
               ip = ip_.split(':')[0]
               port = int(ip_.split(':')[-1]) if ':' in ip_ else 554
-              cam.run(ip, port)
+              cam.run(ip, port,args.password)
           except Exception as e:
               log.error(f"[!] Skip... {ip_port} ip")
       else:
@@ -112,9 +113,9 @@ def main():
             for i in info:
                 ip = i.split(':')[0]
                 port = int(i.split(':')[-1])
-                cam.run(ip,port)
+                cam.run(ip,port,args.password)
     elif args.ip:
-        cam.run(args.ip.split(':')[0],int(args.ip.split(':')[-1]))
+        cam.run(args.ip.split(':')[0],int(args.ip.split(':')[-1]),args.password)
     else:
         parser.print_help()
 
