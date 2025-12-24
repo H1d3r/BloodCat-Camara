@@ -9,6 +9,7 @@ Version 1.5
 [+] Fully automatic calculation of the optimal thread count, ensuring maximum efficiency without impacting system performance
 [+] Expanded password list
 [+] Added --password option for password spraying
+[+] Update National Camera Data for AE AU BR CA CN DE FR GB IL IN JP RU SA SG US
 ```
 
 
@@ -99,3 +100,4 @@ $ ./play.sh
 
 
  
+
