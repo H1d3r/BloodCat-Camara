@@ -29,11 +29,11 @@ class CamLib():
     def __init__(self):
         self.KEY = b'S-H4CK13@M4ptnh!' 
         self.IV = b'14' + b'\x00' * 14    
-        self.DB = 'https://raw.githubusercontent.com/MartinxMax/db/refs/heads/main/blood_cat/global_cam.bc'
+        self.LOCAL_DB = './data/global.bc'
+        self.DB = 'https://raw.githubusercontent.com/MartinxMax/db/refs/heads/main/blood_cat/global.bc'
         self.TIMEOUT=3
         self.default_user = "bloodcat"
         self.default_password = "S_H4CK13"
-        self.FILE = './data/ipcam.info'
         self.USER = [
             "admin",
             "root",
@@ -350,16 +350,39 @@ class CamLib():
                     alive.append(ip)
         return alive
 
-    def get_DB_data(self):
-        def aes_encrypt(data: str) -> bytes:
-            cipher = AES.new(self.KEY, AES.MODE_CBC, self.IV)
-            return cipher.encrypt(pad(data.encode('utf-8'), AES.block_size))
-        def aes_decrypt(encrypted: bytes) -> str:
-            cipher = AES.new(self.KEY, AES.MODE_CBC, self.IV)
-            return unpad(cipher.decrypt(encrypted), AES.block_size).decode('utf-8')
+
+
+    def aes_encrypt(self,data: str) -> bytes:
+        cipher = AES.new(self.KEY, AES.MODE_CBC, self.IV)
+        return cipher.encrypt(pad(data.encode('utf-8'), AES.block_size))
+    
+    def aes_decrypt(self,encrypted: bytes) -> str:
+        cipher = AES.new(self.KEY, AES.MODE_CBC, self.IV)
+        return unpad(cipher.decrypt(encrypted), AES.block_size).decode('utf-8') 
+    
+ 
+    def get_LocalDB_data(self):
+        data = []
         try:
-            enc = requests.get(self.DB,verify=False).content
-            data = aes_decrypt(enc)
+            with open(self.LOCAL_DB, 'rb') as f:
+                for l in f.read().split(b'\uE000'):
+                    if not l:   
+                        continue
+                    data.append(json.loads(self.aes_decrypt(l)))
+        except Exception as e:
+            log.error("Failed to load local data...")
+            return 
+        return data
+
+ 
+    def get_DB_data(self):
+        data = []
+        try:
+            enc = requests.get(self.DB,verify=False,timeout=5).content
+            for l in enc.split(b'\uE000'):
+                if not l:   
+                        continue
+                data.append(json.loads(self.aes_decrypt(l)))
         except Exception as e:
             log.error("Unable to update data, please check your network connection...")
             return False
@@ -372,21 +395,31 @@ class CamLib():
             "data": ip_data
         }
         try:
-            with open(self.FILE, 'a', encoding='utf-8') as f:
-                f.write(json.dumps(record, ensure_ascii=False) + '\n')
+            with open(self.LOCAL_DB , 'ab') as f:
+                data = json.dumps(record, ensure_ascii=False)
+                bin_data = self.aes_encrypt(data)  
+                f.write(bin_data+b'\uE000')
         except Exception as e:
             log.error("Failed to save results, check permissions or if the file exists...")
         else:
-            log.info(f"Results successfully appended to: [\033[33m{self.FILE}\033[0m]")
+            log.info(f"Results successfully appended to: [\033[33m{self.LOCAL_DB}\033[0m]")
 
     def run(self, ip: str, port=554,password=''):
+        def extract_ip(rtsp):
+            match = re.match(r'rtsp://.*?@([\d.]+):\d+/', rtsp)
+            return match.group(1) if match else None
         if password:
             self.PASSWORD = [password]
             log.info(f"Currently entering password spraying : Try Password => [{password}]",f"{password}")
-        
         ip_data = self.show_location(ip)
         if not ip_data:
             return 0
+        data = self.get_LocalDB_data()
+        ip_set = {extract_ip(r['rtsp']) for r in data}
+        if ip in ip_set:
+            log.warning("This IP has already been recorded...")
+            return 0
+       
         resp = self.options_no_auth(ip, port)
         code = self.status(resp)
         if code is None:

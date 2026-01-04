@@ -47,7 +47,7 @@ qp         t\io,_           `~"TOOggQV""""        _,dg,_ =PIQHib.
                                 "boo,._dP"       `\_  `\    `\|   `\   ;
                                  `"7tY~'            `\  `\    `|_   |
                                                       `~\  |'''+'\033[0m'+'\033[35m'+'''
-[Maptnh@S-H4CK13]      [Blood Cat V2.2]    [https://github.com/MartinxMax]'''+'\033[0m'
+[Maptnh@S-H4CK13]      [Blood Cat V2.3]    [https://github.com/MartinxMax]'''+'\033[0m'
 
     
 def read_ips(filename: str):

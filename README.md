@@ -4,6 +4,14 @@
 
 A tool for hacking into publicly exposed network cameras, with support for specifying country and region
 
+```
+Version 2.3
+[+] Encrypt BloodCat data files
+[+] Fix brute-force attack error
+[+] Fix duplicate data addition prevention issue
+[+] Add purple markers for local data and red markers for BloodCat official data in BloodCat-Map
+```
+
 
 ```
 Version 2.2
