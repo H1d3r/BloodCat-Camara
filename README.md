@@ -103,10 +103,10 @@ Replace the original global.bc file, then right-click Reload in BloodCat_Map:
 
 ---
 
-## Hikvision Crack
+## Hikvision Crack && iVMS-4200
 
 ```bash
-(bloodcat)$ python3 CVE-2017-7921_HIK_Auto_Crack.py --ips ./target.txt
+(bloodcat)$ python3 CVE-2017-7921_HIK_Auto_Crack.py --ips ./target.txt --json ./data/hik.json
 ```
 
 ![alt text](./pic/hik.png)
@@ -117,6 +117,17 @@ Replace the original global.bc file, then right-click Reload in BloodCat_Map:
 ```
 
 ![alt text](./pic/hik2.png)
+
+
+Download link : https://github.com/MartinxMax/BloodCat/releases/tag/play
+
+```bash
+(bloodcat)$ python3 CVE-2017-7921_HIK_Auto_Crack.py --ips ./target.txt --csv ./data/hik.csv
+```
+
+![alt text](./pic/hik3.png)
+
+![alt text](./pic/hik4.png)
 
 ---
 
@@ -177,5 +188,6 @@ TEAM A:
 ![alt text](./pic/image-8.png)
 TEAM B:
 ![alt text](./pic/image-9.png)
+
 
 ---
