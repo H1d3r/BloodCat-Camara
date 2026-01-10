@@ -4,9 +4,78 @@
 
 A tool for hacking into publicly exposed network cameras, with support for specifying country and region.
 
-
-
 ![alt text](./pic/main.png)
+
+**About BloodCat**
+
+1. Integrates with search engines, enabling target filtering and continuous threat operations by **country, region, or city**.
+2. Operates at the **lower network protocol layer**, providing high stealth and efficiency.
+3. Performs **camera fingerprint identification** first, automatically filtering out and excluding **honeypot systems**, then enumerates **usernames and passwords** of target network cameras.
+4. Supports **password spraying**, applicable to **single IPs or multiple IP ranges**. 
+5. Supports **bc data updating and merging**, facilitating long-term maintenance and management.
+6. Supports writing **Hikvision camera credential header information** into **bc files**, which can be **visualized on a map**.
+
+**Scanner I recommend: [https://github.com/MartinxMax/n1ght0wl.git](https://github.com/MartinxMax/n1ght0wl.git)**
+
+**About CVE-2017-7921_HIK_Auto_Crack**
+Exploits the Hikvision CVE vulnerability, automatically generating **CSV files** for import into **iVMS-4200** for viewing, or **JSON files** for import into **BloodCat**.
+
+**About BloodCat-Map**
+
+1. Compromised devices can be **visualized on a map**, with direct access to **camera feeds**.
+2. Supports **team collaboration** and **data sharing**, etc.
+3. Supports **remote API data loading**.
+4. Provides **fuzzy search and location-based querying**.
+
+
+ 
+**About BloodCat-Map-LAN**
+
+1. When attacking **internal network cameras**, this program can be launched to view **compromised cameras**.
+2. Supports **automatic layout arrangement** for camera feed viewing.
+
+
+```
+                                               ..,.oooE777999V(;
+                                  ...oooP779090(;''       ''''  I
+                    ...ooB777979V;;''       .....=v}}=}=}=}}v==  5
+               97?(;''     .........<<vvvv<vvvvvvvvvvvvvvv}}}}v} L
+               ,   ..;;`;;;;;<;<<<<<<<<<<<<<v<vvvvvvvvvv}vv}}}}}. 1
+               b (:::``;;;;;;;;;;;<;<;<<<<<<<<<<<<v<v<vvvvvvvv}v}, E
+               `J ::.:.:.``;;;;;;;;;;;<;;;<<<<<<<<<<<<v<v<vvvvvvvx L
+                L  :. :.:.:.:.``;;;;;;;;;;;;;;<;<<<<<<<<<<v<<v<vv<( T
+                `> .    . .:.:.:.:.`:;``;;;;;;;;<;;;<;<<<<<<<<<<<v< >
+                 b ;           . : .:.:.:.`;;;;;;;;;;;<;;<;<<<<<<<<, I
+                 `,`               . : :.:.:.:.`.`;;;;;;;;;;;;<;<;<<. 5
+                  b ;                    . : .:.:.:.`;;;;;;;;;;;<;<;<: E
+                  `,<                         . . .:.:.:.``;;;;;;;;;;. I
+                   b :                             . . :.:.:.:.:.:.;;;. 5
+                   `>;                                  . .:..:.:.:.`.:  |
+                    b :                                      . . :.:.:.x T
+                    `,;                                          . . .::  E
+                     b :                                               _  !4
+                     `r :                                   __.__,--,;'))))).
+                      b :                         ___...--'; `))))))))' '' `>!9eOc
+                      `r :              __,--:-;;;)))))))))))'' '' ' ' _. -'-'.`!9Eg.
+                       L : . __.--_--:,)))))))))))'' ' '  _. ._.-'-'-'-'\-'\---\/\ ``Qu.
+                       `,: !x;:)))))))) ')'' ' _ _._-.'\'\_\_-'\''-\'_'\-'\'\ -_\'-\-. 95n.
+                        D` ))))'''  _ .___.-_:/-/\/-_\ /-_, /-,\ \-/_\/\,-\_/-\/-/--' ..v<]9o.
+                      __b :<> -_\._/\,- ,_ -\ _/\-\ _-\ -_/-\,\/,-/\_/-_\'\--' .vvvvvvv}v}}x}]NEo.
+                .ooPO%LOCu  `< `/\_ -:\/_/-/,\/,/-,/_,-/\ :_\:_-:__-'' ...vvvvvvvvvvvvxx}vx}}}}==No
+              .oPO'       `y. `< ~-\ _\/\_,- \ , - ,___..--' .......>>vvvvvvvvx<xvvxx}=x===}~^^   I
+        om3jR&57'          `Ey, `\ `!,\ \-/_/\_---''.......vv>>vvvvvvvvvv)v<xvx=}=<~~^~`       :_yd
+    _.rq8'                    `L, `<_ `--'.......vv<<<<v<<<<x<vv<vvvvxxxx=>~~~`         iuuuaE'
+  .@tTL'                        `y,  `< .-vvv<<<<<<<<<xxvx>vvvvv=>~~~~`         _uuua'''
+.&P'                              `L,  `>>><<<<><>v<vvvvvx~`::`       ::_uuua'''
+                                    `y,  `:F_P:<x>~>^` `        _uuug'
+                                      `L,  ~~`          _uuua''
+                                        `L,:    _uuua''
+                                          `LaE''
+```
+
+
+
+
 
 ---
 
@@ -249,5 +318,6 @@ $ python3 bloodcat_map_lan.py
 ![alt text](./pic/bloodcat_map_lan-2.png)
 
 ---
+
 
 
