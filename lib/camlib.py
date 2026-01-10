@@ -540,7 +540,6 @@ class CamLib():
         target_path = paths_with_401[0]
  
         log.info(f"witching to path: [{target_path}], attempting to retrieve credentials...", f"{target_path}")
-        return 1
         for u in self.USER:
             for p in self.PASSWORD:
                 auth = self.b64(u, p)
@@ -667,5 +666,6 @@ Network Range: {data['network']}
                     "chmod +x ./exploitdb/searchsploit"
                 )
         return data
+
 
 
