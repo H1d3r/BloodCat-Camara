@@ -36,7 +36,7 @@ $ git clone https://github.com/MartinxMax/BloodCat.git
 $ cd BloodCat && python3 -m venv bloodcat
 $ source ./bloodcat/bin/activate
 (bloodcat)$ python -m pip install --upgrade pip
-(bloodcat)$ pip install -r requirements.txt
+(bloodcat)$ pip install opencv-python;pip install -r requirements.txt
 ``` 
 
 If you are using the Windows operating system, please download `https://github.com/MartinxMax/BloodCat/releases/download/play/ffplay.exe` and move the downloaded .exe file into the `./lib/` directory.
@@ -209,4 +209,5 @@ TEAM B:
 
 
 ---
+
 
