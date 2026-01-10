@@ -210,4 +210,44 @@ TEAM B:
 
 ---
 
+# Blood-Cat-Map LAN Usage
+
+This is a private network camera viewer
+
+Test file:
+`https://github.com/MartinxMax/BloodCat/releases/download/play/BloodCat_Map_LAN_Test.zip`
+
+```bash
+(192.168.0.102)$ unzip BloodCat_Map_LAN_Test.zip
+(192.168.0.102)$ cd BloodCat_Map_LAN_Test
+(192.168.0.102)$ bash lunch.sh
+(192.168.0.107)$ unzip BloodCat_Map_LAN_Test.zip
+(192.168.0.107)$ cd BloodCat_Map_LAN_Test
+(192.168.0.107)$ bash lunch.sh
+```
+
+
+```bash
+# target.txt
+192.168.0.107:8554
+192.168.0.102:8554
+```
+
+```bash
+$ python3 bloodcat.py --ips target.txt
+```
+
+
+![alt text](./pic/bloodcat_map_lan.png)
+
+```bash
+$ python3 bloodcat_map_lan.py
+```
+
+![alt text](./pic/bloodcat_map_lan-1.png)
+
+![alt text](./pic/bloodcat_map_lan-2.png)
+
+---
+
 
