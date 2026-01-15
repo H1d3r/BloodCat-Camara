@@ -36,6 +36,12 @@ Exploits the Hikvision CVE vulnerability, automatically generating **CSV files**
 1. When attacking **internal network cameras**, this program can be launched to view **compromised cameras**.
 2. Supports **automatic layout arrangement** for camera feed viewing.
 
+**BloodCat for Nmap**
+
+
+1. You don’t need to install most of BloodCat’s core dependencies to perform the detection.
+2. This Nmap version only supports detecting anonymous public cameras and cannot brute‑force camera account passwords.
+
 
 ```
                                                ..,.oooE777999V(;
@@ -97,7 +103,32 @@ Exploits the Hikvision CVE vulnerability, automatically generating **CSV files**
 
 ---
 
-# Install Dependencies
+
+# BloodCat for Nmap
+
+PS: This Nmap version only supports detecting anonymous public cameras and cannot brute‑force camera account passwords.
+The good news is that you don’t need to install most of BloodCat’s core dependencies to perform the detection.
+
+`$ sudo apt install nmap ffmpeg -y`
+
+`$ wget https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/bloodcat.nse -o bloodcat.nse`
+
+`$ nmap --script ./bloodcat.nse -Pn -p 554 X.X.X.X`
+
+![alt text](./pic/nmap2.png)
+ 
+`$ nmap --script ./bloodcat.nse -Pn -p 554 -iL targets.txt`
+
+![alt text](./pic/nmap1.png)
+
+`$ ffplay -fs -rtsp_transport tcp rtsp://admin:123456@x.x.x.x:554/1`
+
+![alt text](./pic/nmap3.png)
+
+---
+
+
+# BloodCat Install Dependencies
 
 Disk space requirement: `Available space > 600 MB`
 
@@ -320,6 +351,7 @@ $ python3 bloodcat_map_lan.py
 ![alt text](./pic/bloodcat_map_lan-2.png)
 
 ---
+
 
 
 
