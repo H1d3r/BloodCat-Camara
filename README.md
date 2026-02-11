@@ -39,8 +39,7 @@ PS: This tool supports weak‑credential and brute‑force testing against most 
 <img src="./pic/m1.gif" width="100%">
  
 <img src="./pic/m2.gif" width="100%">
-
-<img src="./pic/m5.gif" width="100%">
+ 
 
 <img src="./pic/m3.gif" width="100%">
  
@@ -501,6 +500,7 @@ $ python3 bloodcat_map_lan.py
 
 
  
+
 
 
 
