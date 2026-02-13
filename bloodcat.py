@@ -103,6 +103,8 @@ def read_and_exe_hik_credentials(file_path):
     except Exception as e:
         log.error(f"An unknown error occurred while processing the file: {str(e)}")
 
+ 
+
 def main():
     print(LOGO)
     parser = argparse.ArgumentParser(description='Blood Cat - RTSP Camera Weak Credential Scanner')
@@ -115,7 +117,11 @@ def main():
     parser.add_argument('--password', default='', type=str, help='Password Spraying')
     parser.add_argument('--merge', action='store_true', help='Merge and update all data in ./data into a single BC file')
     parser.add_argument('--hiv', default='', help='Load Hikvision credentials file')
+    parser.add_argument('--live', default='', help='Filter currently active cameras in the BC file')
     args = parser.parse_args()
+    if args.live:
+        cam.ping_live(args.live)
+        sys.exit(0)
     if args.hiv:
         read_and_exe_hik_credentials(args.hiv)
         sys.exit(0)
