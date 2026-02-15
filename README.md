@@ -57,8 +57,9 @@ PS: This tool supports weak‑credential and brute‑force testing against most 
 - [How use Bloodcat CVE](#bloodcat-cve)
 - [How use Bloodcat Global Map](#bloodcat-map)
 - [How use Bloodcat Lan Map](#bloodcat-lan-map)
+- [How use Bloodcat Editor](#bloodcat-editor)
 - [How use Bloodcat Nmap (Run immediately)](#bloodcat-nmap)
-- [How use Bloodcat Hikvision Editor](#bloodcat-hikvision-editor)
+
 ---
 
 
@@ -445,16 +446,16 @@ The good news is that you don’t need to install most of BloodCat’s core depe
 ---
 
  
-# Bloodcat Hikvision Editor
+# Bloodcat Editor
 
-After importing a CSV configuration file, you can:
+After importing a CSV or BC configuration file, you can:
 1.Filter targets by specific country/region
 2.Perform fuzzy matching on fields (e.g. country, keyword, etc.)
 3.Re-export only the matched/selected targets
 4.Visualize all target cameras directly on a world map using geolocation data
 
 ```bash
-(bloodcat)$ python3 bloodcat_hikvision_editor.py
+(bloodcat)$ python3 bloodcat_editor.py
 ```
 
 ![alt text](./pic/hik-image.png)

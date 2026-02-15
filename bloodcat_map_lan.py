@@ -11,6 +11,7 @@ import math
 import cv2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from lib.camlib import CamLib
+from lib.version import VERSION
 
 LOGO = "\033[38;5;208m"+r'''
                                                .--.
@@ -39,7 +40,7 @@ LOGO = "\033[38;5;208m"+r'''
           \_,'     _.'   /              /''     _,-'            _|   |
                   '     /               `-----''               /     |
                   `...-'                                       `...
-[Maptnh@S-H4CK13]      [Blood Cat Map LAN 1.0]    [https://github.com/MartinxMax]'''+"\033[0m"
+[Maptnh@S-H4CK13]      [Blood Cat Map LAN '''+VERSION+''']    [https://github.com/MartinxMax]'''+"\033[0m"
  
 class VideoThread(QtCore.QThread):
     frame_ready = QtCore.pyqtSignal(QtGui.QImage)

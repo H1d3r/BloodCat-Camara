@@ -27,7 +27,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWebChannel import QWebChannel
-
+from lib.version import VERSION
 log = LogCat()
 cam = CamLib()
 CONFIG_PATH = os.path.join('.', 'data', 'bloodcatmap.conf')
@@ -238,7 +238,7 @@ function doRenderStatusList(){
             for(let u of remoteUrls){ if(!u) continue; u=String(u).trim(); if(!u) continue; if(seen.has(u)) continue; seen.add(u); clean.push(u); if(clean.length>=slotCount) break;}
             for(let i=0;i<slotCount;i++){
                 const slotIdx=i+1;
-                const img=`./location/color_${slotIdx}.png`;
+                const img=`./color_${slotIdx}.png`;
                 const url=clean[i]||null;
                 const displayText=url?(url.length>32?url.slice(0,30)+'..':url):'Empty';
                 const div=document.createElement('div'); div.className='statusItem';
@@ -384,7 +384,7 @@ LOGO = "\033[38;5;208m"+r'''
           \_,'     _.'   /              /''     _,-'            _|   |
                   '     /               `-----''               /     |
                   `...-'                                       `...
-[Maptnh@S-H4CK13]      [Blood Cat Map V2.3]    [https://github.com/MartinxMax]'''+"\033[0m"
+[Maptnh@S-H4CK13]      [Blood Cat Map '''+VERSION+r''']    [https://github.com/MartinxMax]'''+"\033[0m"
 
 
 class GlobalBCHandler(SimpleHTTPRequestHandler):
@@ -570,7 +570,7 @@ class DataLoader(QThread):
                     "asn": asn,
                     "network": network,
                     "source": source_label,
-                    "icon": icon_path or "./location/color_1.png",
+                    "icon": icon_path or "./color_1.png",
                     "source_url": source_url or ""
                 }
 
@@ -627,7 +627,7 @@ class DataLoader(QThread):
                     if not remote_raw:
                         continue
                     slot_index = (idx % SLOT_COUNT) + 1
-                    icon_path = f"./location/color_{slot_index}.png"
+                    icon_path = f"./color_{slot_index}.png"
                     parsed = self.parse_raw_to_dict(remote_raw, 'remote', source_url=url, icon_path=icon_path)
                     for k,v in parsed.items():
                         remote_merged[k] = v
@@ -647,7 +647,7 @@ class MapWindow(QMainWindow):
         self.setWindowTitle("BloodCat Map @ S-H4CK13    [https://github.com/MartinxMax]")
         self.resize(1280, 800)
 
-        icon_path = os.path.join(os.path.dirname(__file__), "location", "ico.png")
+        icon_path = os.path.join(os.path.dirname(__file__), "ico.png")
         if os.path.exists(icon_path):
             self.setWindowIcon(QIcon(icon_path))
 
@@ -666,7 +666,7 @@ class MapWindow(QMainWindow):
         self.wait_label.setAttribute(Qt.WA_TransparentForMouseEvents)
         self.wait_label.setAttribute(Qt.WA_NoSystemBackground)
         self.wait_label.setCursor(Qt.BlankCursor)
-        wait_path = os.path.join(os.path.dirname(__file__), "location", "wait.jpg")
+        wait_path = os.path.join(os.path.dirname(__file__),"location", "wait.jpg")
         self.wait_pixmap = None
         if os.path.exists(wait_path):
             self.wait_pixmap = QPixmap(wait_path)
@@ -676,7 +676,7 @@ class MapWindow(QMainWindow):
 
         self.wait_label.raise_()
         self.wait_label.show()
-        self.html_path = os.path.join(os.path.dirname(__file__), "map_temp.html")
+        self.html_path = os.path.join(os.path.dirname(__file__),"location","map_temp.html")
         with open(self.html_path, "w", encoding="utf-8") as f:
             f.write(HTML)
         self.channel = QWebChannel()
@@ -802,7 +802,7 @@ class MapWindow(QMainWindow):
                 remote_item = merged[ip]
                 lalo_to_use = remote_item.get("lalo", "")
  
-                icon_to_use = remote_item.get("icon", "./location/color_1.png")
+                icon_to_use = remote_item.get("icon", "./color_1.png")
                 merged[ip] = {
                     "rtsp": local_item.get("rtsp", remote_item.get("rtsp", "")),
                     "lalo": lalo_to_use,

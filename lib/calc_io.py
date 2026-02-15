@@ -9,7 +9,7 @@
 import multiprocessing
 import platform
 from lib.log_cat import LogCat
- 
+from lib.version import VERSION
 
 log = LogCat()
 

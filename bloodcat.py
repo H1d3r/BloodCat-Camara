@@ -14,6 +14,7 @@ import json
 from lib.camlib import * 
 from lib.fofaget import * 
 from lib.log_cat import * 
+from lib.version import VERSION
 
 log = LogCat()
 cam = CamLib()
@@ -48,8 +49,8 @@ qp         t\io,_           `~"TOOggQV""""        _,dg,_ =PIQHib.
                                _        _,p"     |    |   `\`;    |    |
                                 "boo,._dP"       `\_  `\    `\|   `\   ;
                                  `"7tY~'            `\  `\    `|_   |
-                                                      `~\  |'''+'\033[0m'+'\033[35m'+'''
-[Maptnh@S-H4CK13]      [Blood Cat V2.3.3]    [https://github.com/MartinxMax]'''+'\033[0m'
+                                                      `~\  |'''+'\033[0m'+'\033[35m'+r'''
+[Maptnh@S-H4CK13]      [Blood Cat '''+VERSION+r''']    [https://github.com/MartinxMax]'''+'\033[0m'
 
     
 def read_ips(filename: str):
@@ -102,7 +103,6 @@ def read_and_exe_hik_credentials(file_path):
         log.error(f"{file_path} is not a valid JSON format, please check the file content!")
     except Exception as e:
         log.error(f"An unknown error occurred while processing the file: {str(e)}")
-
  
 
 def main():

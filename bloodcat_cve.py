@@ -9,7 +9,7 @@
 
 import sys
 import importlib
-
+from lib.version import VERSION
  
 try:
     import readline
@@ -42,7 +42,7 @@ class MiniBloodcat:
 (  <\_-) )'-.____...\  `._   //-'
  `. `-' /-._)))      `-._)))
    `...'          
-                Blood-Cat CVE Exploit Console
+                Blood-Cat CVE Exploit Console '''+VERSION+r'''
 Maptnh@S-H4CK13 | type `help` | https://github.com/MartinxMax/
 ---------------------------------------------------------------''')
 
