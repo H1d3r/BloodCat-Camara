@@ -18,7 +18,6 @@ Once you become aware of their existence, you may realize how close and real onl
 🎥 A comprehensive IP Camera penetration testing toolkit, featuring default credential enumeration, CVE exploitation, and additional capabilities — with support for collaborative team usage.
 
 🛡️ BloodCat does not collect any identity-related information.
-To ensure user anonymity and security, automatic updates are intentionally disabled to reduce the risk of supply-chain compromise.
 
 💻 BloodCat is compatible with Windows, Linux, and macOS.
 
@@ -257,6 +256,18 @@ Replace the original global.bc file, then right-click Reload in BloodCat_Map:
 ![alt text](./pic/live.png)
 
 >live_20260213_234933.bc
+
+---
+
+
+## Update
+
+```bash
+(bloodcat)$ python3 bloodcat.py --update
+```
+
+![alt text](./pic/u1.png)
+
 
 ---
 

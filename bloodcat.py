@@ -15,10 +15,10 @@ from lib.camlib import *
 from lib.fofaget import * 
 from lib.log_cat import * 
 from lib.version import VERSION
-
+from lib.update import * 
 log = LogCat()
 cam = CamLib()
-
+upd=  Updater()
 LOGO = "\033[31m"+r'''
 
                   ;,_            ,
@@ -118,7 +118,12 @@ def main():
     parser.add_argument('--merge', action='store_true', help='Merge and update all data in ./data into a single BC file')
     parser.add_argument('--hiv', default='', help='Load Hikvision credentials file')
     parser.add_argument('--live', default='', help='Filter currently active cameras in the BC file')
+    parser.add_argument('--update', action='store_true', help='Check for the latest version and update')
+
     args = parser.parse_args()
+    if args.update:
+        upd.check_current_version()
+        sys.exit(0)
     if args.live:
         cam.ping_live(args.live)
         sys.exit(0)
