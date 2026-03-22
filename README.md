@@ -740,13 +740,13 @@ The good news is that you don’t need to install most of BloodCat’s core depe
 `$ sudo apt install nmap ffmpeg -y`
 
 ```BASH
-ip=<Target_X.X.X.X>; nmap -Pn -p "$(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/TOP1000_Camera_Port.txt | grep -oE '[0-9]+' | sort -n | uniq | paste -sd,)" --script <(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/bloodcat.nse) $ip
+ip=<Target_X.X.X.X>; nmap -Pn -p "$(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/TOP1000_RTSP_Port.txt | grep -oE '[0-9]+' | sort -n | uniq | paste -sd,)" --script <(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/bloodcat.nse) $ip
 ```
 
 ![alt text](./pic/main/nmap2.png)
 
 ```BASH
-ips=<File_Name>; nmap -Pn -p "$(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/TOP1000_Camera_Port.txt | grep -oE '[0-9]+' | sort -n | uniq | paste -sd,)" --script <(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/bloodcat.nse) -iL $ips
+ips=<File_Name>; nmap -Pn -p "$(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/TOP1000_RTSP_Port.txt | grep -oE '[0-9]+' | sort -n | uniq | paste -sd,)" --script <(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/bloodcat.nse) -iL $ips
 ```
 
 ![alt text](./pic/main/nmap1.png)
