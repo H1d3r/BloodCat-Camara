@@ -844,40 +844,19 @@ After successful authentication, you can control the camera direction using the 
 
 # Bloodcat Lan Map
 
+  
+
+```bash
+(bloodcat)$ python3 bloodcat.py --ips ./B-172-554.txt
+```
+
+![alt text](./pic/main/lan1.png)
  
-Test file:
-`https://github.com/MartinxMax/BloodCat/releases/download/play/BloodCat_Map_LAN_Test.zip`
-
 ```bash
-(192.168.0.102)$ unzip BloodCat_Map_LAN_Test.zip
-(192.168.0.102)$ cd BloodCat_Map_LAN_Test
-(192.168.0.102)$ bash lunch.sh
-(192.168.0.107)$ unzip BloodCat_Map_LAN_Test.zip
-(192.168.0.107)$ cd BloodCat_Map_LAN_Test
-(192.168.0.107)$ bash lunch.sh
+(bloodcat)$ python3 bloodcat_map_lan.py
 ```
 
-
-```bash
-# target.txt
-192.168.0.107:8554
-192.168.0.102:8554
-```
-
-```bash
-$ python3 bloodcat.py --ips target.txt
-```
-
-
-![alt text](./pic/main/bloodcat_map_lan.png)
-
-```bash
-$ python3 bloodcat_map_lan.py
-```
-
-![alt text](./pic/main/bloodcat_map_lan-1.png)
-
-![alt text](./pic/main/bloodcat_map_lan-2.png)
+![alt text](./pic/main/lan2.png)
 
 
 <p align="center">
