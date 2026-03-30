@@ -49,7 +49,8 @@
 
 <img src="./pic/display/main2.png" width="100%">
 
-A tool for hacking into publicly exposed network cameras, with support for specifying country and region.
+BloodCat detects exposed IP cameras across private/public networks, retrieves credentials, and exploits CVEs, with country/region filtering and interactive map-based viewing.
+
 
 PS: This tool supports weak‑credential and brute‑force testing against most mainstream network camera models. However, some devices with enhanced security mechanisms deliberately obfuscate or conceal their fingerprinting characteristics, which means the tool is not universally effective. Future updates will progressively introduce additional camera‑related CVE‑based vulnerability detection plugins, aiming to improve success rates while reducing unnecessary probing traffic.
 
