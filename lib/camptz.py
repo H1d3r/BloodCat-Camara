@@ -199,7 +199,8 @@ class camPTZ():
         scheme, status = self.__get_head(ip, port)
 
         if not scheme:
-            return False
+            print("[!] Target is not an ONVIF service")
+            return False,False
 
         self.__auth = HTTPDigestAuth(username, password)
 
@@ -224,12 +225,14 @@ class camPTZ():
                 timeout=self.__TIMEOUT,
                 verify=False
             )
-
+     
             if r.status_code == 401:
-                return False
+                print("[!] Incorrect username or password")
+                return False,False
 
         except:
-            return False
+            print("[!] Target host is unreachable")
+            return False,False
 
         try:
 
@@ -239,7 +242,7 @@ class camPTZ():
             ptz_path = None
 
             for elem in root.iter():
-
+                
                 tag = elem.tag.lower()
 
                 if tag.endswith("xaddr"):
@@ -249,15 +252,18 @@ class camPTZ():
                     if text:
 
                         low = text.lower()
-
+                        
                         if "media" in low:
+                            print("[+] Found authentication service interface")
                             media_path = urlparse(text).path
 
                         if "ptz" in low:
+                            print("[+] Remote PTZ control is available for the target")
                             ptz_path = urlparse(text).path
 
             if not media_path:
-                return False
+                print("[!] TOKEN endpoint path not found")
+                return False,False
 
             tokens = self.get_profiles(
                 onvif_url + media_path,
@@ -265,12 +271,14 @@ class camPTZ():
             )
 
             if not tokens:
-                return False
+                print("[!] TOKEN request failed")
+                return False,False
 
             token = tokens[0]
-
+    
             if not ptz_path:
-                return False
+                print("[!] Remote PTZ control service not found")
+                return False,False
 
             self.__scheme = scheme
             self.__ip = ip
@@ -279,11 +287,11 @@ class camPTZ():
             self.__ptz_path = ptz_path
 
             self.__auth_stat = True
-
+            print("=========[PTZ]========")
             return token, ptz_path
 
         except:
-            return False
+            return False,False
 
     def move(self, pan, tilt, zoom, token, ptz_path):
 
