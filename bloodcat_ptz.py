@@ -173,10 +173,8 @@ def main():
 
     if args.ip and args.port and args.username and args.password:
         token, path = cam.auth(args.ip, args.port, args.username, args.password)
-
+        
         if token:
-            print(f"[+] Authentication success [{token}]")
-
             controller = PTZKeyboardController(cam, token, path)
             controller.start()
 
@@ -192,8 +190,7 @@ def main():
             finally:
                 controller.stop()
                 print("[-] Stopped.")
-        else:
-            print("[-] Authentication failed or host unreachable")
+ 
     else:
         print("[!] Missing parameters")
 
