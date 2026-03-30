@@ -67,6 +67,9 @@ Once you become aware of their existence, you may realize how close and real onl
 
 💻 BloodCat is compatible with Windows, Linux, and macOS.
 
+🕵️‍♂️ Check whether your company/home/school IP cameras have security vulnerabilities.
+
+ 
 ---
 
 
